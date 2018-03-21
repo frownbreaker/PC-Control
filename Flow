@@ -1,0 +1,872 @@
+[
+    {
+        "id": "e102a75c.4f2e68",
+        "type": "mqtt in",
+        "z": "c83b570d.cb5fa8",
+        "name": "Office PC",
+        "topic": "BTLE",
+        "qos": "0",
+        "broker": "c78cc561.e16a48",
+        "x": 80,
+        "y": 180,
+        "wires": [
+            [
+                "815b957a.9f10f8"
+            ]
+        ]
+    },
+    {
+        "id": "9994ba62.878d08",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "Office Amp On",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.166/OFFICEAMPON",
+        "tls": "",
+        "x": 2120,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "355003ba.c515ac",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "Office Desk Light On",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.166/RAJDESKLIGHTON",
+        "tls": "",
+        "x": 1800,
+        "y": 180,
+        "wires": [
+            [
+                "ed5ad14a.e1c4f"
+            ]
+        ]
+    },
+    {
+        "id": "ed5ad14a.e1c4f",
+        "type": "delay",
+        "z": "c83b570d.cb5fa8",
+        "name": "5s",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1970,
+        "y": 180,
+        "wires": [
+            [
+                "9994ba62.878d08"
+            ]
+        ]
+    },
+    {
+        "id": "815b957a.9f10f8",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "name": "",
+        "x": 1340,
+        "y": 180,
+        "wires": [
+            [
+                "13611864.165c28"
+            ]
+        ]
+    },
+    {
+        "id": "a72ccb77.b9b728",
+        "type": "function",
+        "z": "c83b570d.cb5fa8",
+        "name": "Timers Off",
+        "func": "msg.reset = \"whatever you need here\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1130,
+        "y": 240,
+        "wires": [
+            [
+                "815b957a.9f10f8"
+            ]
+        ]
+    },
+    {
+        "id": "f53525c3.9423d8",
+        "type": "http in",
+        "z": "c83b570d.cb5fa8",
+        "name": "PC Off",
+        "url": "/PCSHUTDOWN",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "137d08d9.ac9097",
+                "9efb6dba.12387",
+                "2a660965.7685c6"
+            ]
+        ]
+    },
+    {
+        "id": "13611864.165c28",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "PC On",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.166/OFFICEPCON",
+        "tls": "",
+        "x": 1490,
+        "y": 180,
+        "wires": [
+            [
+                "d36e791f.b10cf8"
+            ]
+        ]
+    },
+    {
+        "id": "137d08d9.ac9097",
+        "type": "delay",
+        "z": "c83b570d.cb5fa8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 480,
+        "y": 300,
+        "wires": [
+            [
+                "55d652ad.adb14c"
+            ]
+        ]
+    },
+    {
+        "id": "d36e791f.b10cf8",
+        "type": "delay",
+        "z": "c83b570d.cb5fa8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1620,
+        "y": 180,
+        "wires": [
+            [
+                "355003ba.c515ac"
+            ]
+        ]
+    },
+    {
+        "id": "55d652ad.adb14c",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "30",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "name": "Wait for PC to shutdown",
+        "x": 750,
+        "y": 300,
+        "wires": [
+            [
+                "39345f39.878fa"
+            ]
+        ]
+    },
+    {
+        "id": "39345f39.878fa",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "PC Off",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.166/OFFICEPCOFF",
+        "tls": "",
+        "x": 930,
+        "y": 300,
+        "wires": [
+            [
+                "6416b493.0286dc",
+                "a72ccb77.b9b728"
+            ]
+        ]
+    },
+    {
+        "id": "4ca77205.e5b48c",
+        "type": "ping",
+        "z": "c83b570d.cb5fa8",
+        "name": "Ping PC",
+        "host": "192.168.0.66",
+        "timer": "20",
+        "x": 320,
+        "y": 420,
+        "wires": [
+            [
+                "5cdf1d9.76500e4"
+            ]
+        ]
+    },
+    {
+        "id": "9efb6dba.12387",
+        "type": "function",
+        "z": "c83b570d.cb5fa8",
+        "name": "Timers Off",
+        "func": "msg.reset = \"whatever you need here\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 240,
+        "wires": [
+            [
+                "55d652ad.adb14c"
+            ]
+        ]
+    },
+    {
+        "id": "2a660965.7685c6",
+        "type": "http response",
+        "z": "c83b570d.cb5fa8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 470,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5cdf1d9.76500e4",
+        "type": "switch",
+        "z": "c83b570d.cb5fa8",
+        "name": "PC Down?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 510,
+        "y": 420,
+        "wires": [
+            [
+                "55d652ad.adb14c",
+                "be4b0f1b.31299"
+            ],
+            [
+                "fcbb8127.770b5"
+            ]
+        ]
+    },
+    {
+        "id": "fcbb8127.770b5",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "20",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "name": "Off",
+        "x": 690,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "be4b0f1b.31299",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "20",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "name": "On",
+        "x": 690,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5dedd5.bc7972",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "Office Desk Lamp Off",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.166/RAJDESKLIGHTOFF",
+        "tls": "",
+        "x": 1580,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6989da22.4ff994",
+        "type": "delay",
+        "z": "c83b570d.cb5fa8",
+        "name": "20s",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1410,
+        "y": 300,
+        "wires": [
+            [
+                "d5dedd5.bc7972"
+            ]
+        ]
+    },
+    {
+        "id": "906949e1.978e18",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "Office Amp Off",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.166/OFFICEAMPOFF",
+        "tls": "",
+        "x": 1260,
+        "y": 300,
+        "wires": [
+            [
+                "6989da22.4ff994"
+            ]
+        ]
+    },
+    {
+        "id": "6416b493.0286dc",
+        "type": "delay",
+        "z": "c83b570d.cb5fa8",
+        "name": "1s",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1110,
+        "y": 300,
+        "wires": [
+            [
+                "906949e1.978e18"
+            ]
+        ]
+    },
+    {
+        "id": "d7afb64d.8ea3b8",
+        "type": "ping",
+        "z": "c83b570d.cb5fa8",
+        "name": "Ping PC",
+        "host": "192.168.0.66",
+        "timer": "60",
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "d35da96a.b656a8"
+            ]
+        ]
+    },
+    {
+        "id": "d35da96a.b656a8",
+        "type": "switch",
+        "z": "c83b570d.cb5fa8",
+        "name": "PC Down?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 770,
+        "y": 100,
+        "wires": [
+            [
+                "e4fe31b3.52327"
+            ],
+            [
+                "5153e48c.74f6bc"
+            ]
+        ]
+    },
+    {
+        "id": "e4fe31b3.52327",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "20",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "name": "On",
+        "x": 950,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5153e48c.74f6bc",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "20",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "name": "Off",
+        "x": 950,
+        "y": 120,
+        "wires": [
+            [
+                "59b84804.411f98"
+            ]
+        ]
+    },
+    {
+        "id": "59b84804.411f98",
+        "type": "function",
+        "z": "c83b570d.cb5fa8",
+        "name": "Timers Off",
+        "func": "msg.reset = \"whatever you need here\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1130,
+        "y": 120,
+        "wires": [
+            [
+                "815b957a.9f10f8"
+            ]
+        ]
+    },
+    {
+        "id": "bfdc3f95.29c19",
+        "type": "mqtt in",
+        "z": "c83b570d.cb5fa8",
+        "name": "AV Room",
+        "topic": "BTLEAVR",
+        "qos": "0",
+        "broker": "c78cc561.e16a48",
+        "x": 80,
+        "y": 560,
+        "wires": [
+            [
+                "640b0f5f.6a946"
+            ]
+        ]
+    },
+    {
+        "id": "1417aa98.89fd15",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "AVSPEAKERSON",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/AVSPEAKERSON",
+        "tls": "",
+        "x": 710,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "640b0f5f.6a946",
+        "type": "time-range-switch",
+        "z": "c83b570d.cb5fa8",
+        "name": "AVR Normal Vs Night Mode",
+        "lat": "51.5161351",
+        "lon": "-0.3173806",
+        "startTime": "07:00",
+        "endTime": "21:30",
+        "x": 300,
+        "y": 560,
+        "wires": [
+            [
+                "1417aa98.89fd15"
+            ],
+            [
+                "b523b18b.1a531"
+            ]
+        ]
+    },
+    {
+        "id": "b523b18b.1a531",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "AVONLYON",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/AVONLYON",
+        "tls": "",
+        "x": 690,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1751eb6d.6b9cd5",
+        "type": "mqtt in",
+        "z": "c83b570d.cb5fa8",
+        "name": "Gym",
+        "topic": "BTLEGYM",
+        "qos": "0",
+        "broker": "c78cc561.e16a48",
+        "x": 70,
+        "y": 680,
+        "wires": [
+            [
+                "c0b2ec66.100ee"
+            ]
+        ]
+    },
+    {
+        "id": "c0b2ec66.100ee",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "RUNON",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/RUNON",
+        "tls": "",
+        "x": 240,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b04ed1a2.ef60b",
+        "type": "mqtt in",
+        "z": "c83b570d.cb5fa8",
+        "name": "Kitchen",
+        "topic": "BTLEKIT",
+        "qos": "0",
+        "broker": "c78cc561.e16a48",
+        "x": 70,
+        "y": 940,
+        "wires": [
+            [
+                "53f475f0.7e889c"
+            ]
+        ]
+    },
+    {
+        "id": "53f475f0.7e889c",
+        "type": "time-range-switch",
+        "z": "c83b570d.cb5fa8",
+        "name": "When Dark",
+        "lat": "51.5161351",
+        "lon": "-0.3173806",
+        "startTime": "sunset",
+        "endTime": "sunrise",
+        "x": 230,
+        "y": 940,
+        "wires": [
+            [
+                "9277dd45.fb622"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a1d1f126.6c28c",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "WALLON",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/WALLON",
+        "tls": "",
+        "x": 1456,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9310d611.6553d8",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "WALLOFF",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/WALLOFF",
+        "tls": "",
+        "x": 1106,
+        "y": 940,
+        "wires": [
+            [
+                "311aa319.65662c"
+            ]
+        ]
+    },
+    {
+        "id": "7e170918.4d82a8",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "TABLEON",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/TABLEON",
+        "tls": "",
+        "x": 1466,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "428ac349.a74b1c",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "TABLEOFF",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/TABLEOFF",
+        "tls": "",
+        "x": 1466,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8df6c9b7.e58238",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "0",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "name": "",
+        "x": 1276,
+        "y": 850,
+        "wires": [
+            [
+                "a1d1f126.6c28c",
+                "7e170918.4d82a8"
+            ]
+        ]
+    },
+    {
+        "id": "4cc90f7b.f7a59",
+        "type": "function",
+        "z": "c83b570d.cb5fa8",
+        "name": "Timers Off",
+        "func": "msg.reset = \"whatever you need here\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1086,
+        "y": 900,
+        "wires": [
+            [
+                "8df6c9b7.e58238"
+            ]
+        ]
+    },
+    {
+        "id": "27a7c063.be35d",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "name": "",
+        "x": 906,
+        "y": 900,
+        "wires": [
+            [
+                "4cc90f7b.f7a59",
+                "9310d611.6553d8"
+            ]
+        ]
+    },
+    {
+        "id": "311aa319.65662c",
+        "type": "delay",
+        "z": "c83b570d.cb5fa8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1276,
+        "y": 900,
+        "wires": [
+            [
+                "428ac349.a74b1c"
+            ]
+        ]
+    },
+    {
+        "id": "9277dd45.fb622",
+        "type": "time-range-switch",
+        "z": "c83b570d.cb5fa8",
+        "name": "Before 9pm",
+        "lat": "51.5161351",
+        "lon": "-0.3173806",
+        "startTime": "sunset",
+        "endTime": "20:59",
+        "x": 430,
+        "y": 840,
+        "wires": [
+            [
+                "32af7aac.60c346"
+            ],
+            [
+                "27a7c063.be35d",
+                "8df6c9b7.e58238"
+            ]
+        ]
+    },
+    {
+        "id": "32af7aac.60c346",
+        "type": "trigger",
+        "z": "c83b570d.cb5fa8",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "30",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "name": "",
+        "x": 710,
+        "y": 780,
+        "wires": [
+            [
+                "600b6716.75efb8"
+            ]
+        ]
+    },
+    {
+        "id": "600b6716.75efb8",
+        "type": "http request",
+        "z": "c83b570d.cb5fa8",
+        "name": "TABLEON",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.0.237/TABLEON",
+        "tls": "",
+        "x": 890,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c78cc561.e16a48",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "192.168.0.251",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
